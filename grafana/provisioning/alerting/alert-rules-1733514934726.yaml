@@ -1,0 +1,180 @@
+apiVersion: 1
+groups:
+    - orgId: 1
+      name: alert
+      folder: Crossover Alerts
+      interval: 10s
+      rules:
+        - uid: fe64qw3jsikg0a
+          title: SELL EVENT
+          condition: C
+          for: 0s
+          data:
+            - refId: A
+              relativeTimeRange:
+                from: 172800000
+                to: 0
+              datasourceUid: P951FEA4DE68E13C5
+              model:
+                intervalMs: 1000
+                maxDataPoints: 43200
+                query: |-
+                    SELECT eventCode FROM "trading_output"
+                    GROUP BY "symbol"
+                rawQuery: true
+                refId: A
+                resultFormat: time_series
+            - refId: B
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params: []
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - B
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: A
+                intervalMs: 1000
+                maxDataPoints: 43200
+                reducer: last
+                refId: B
+                type: reduce
+            - refId: C
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params:
+                            - 0.5
+                            - 1.5
+                        type: within_range
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - C
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: B
+                intervalMs: 1000
+                maxDataPoints: 43200
+                refId: C
+                type: threshold
+          dashboardUid: ae5pjl8v1fwn4e
+          panelId: 1
+          noDataState: NoData
+          execErrState: Error
+          annotations:
+            __dashboardUid__: ae5pjl8v1fwn4e
+            __panelId__: "1"
+            summary: "Bearish Crossover Alert for {{ $values.B.Labels.symbol }}!"
+          labels:
+            Event: SELL
+            Symbol: "{{ $values.B.Labels.symbol }}"
+          isPaused: false
+          notification_settings:
+            receiver: Discord Server
+    - orgId: 1
+      name: alerts
+      folder: Crossover Alerts
+      interval: 10s
+      rules:
+        - uid: de643xmr6df5sf
+          title: BUY EVENT
+          condition: C
+          for: 0s
+          data:
+            - refId: A
+              relativeTimeRange:
+                from: 172800000
+                to: 0
+              datasourceUid: ce63h55mzrf28a
+              model:
+                intervalMs: 1000
+                maxDataPoints: 43200
+                query: |-
+                    SELECT eventCode FROM "trading_output"
+                    GROUP BY "symbol"
+                rawQuery: true
+                refId: A
+                resultFormat: time_series
+            - refId: B
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params: []
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - B
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: A
+                intervalMs: 1000
+                maxDataPoints: 43200
+                reducer: last
+                refId: B
+                type: reduce
+            - refId: C
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params:
+                            - 1.5
+                            - 2.5
+                        type: within_range
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - C
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: B
+                intervalMs: 1000
+                maxDataPoints: 43200
+                refId: C
+                type: threshold
+          dashboardUid: ae5pjl8v1fwn4e
+          panelId: 1
+          noDataState: NoData
+          execErrState: Error
+          annotations:
+            __dashboardUid__: ae5pjl8v1fwn4e
+            __panelId__: "1"
+            summary: "Bullish Crossover Alert for {{ $values.B.Labels.symbol }}!"
+          labels:
+            Event: BUY
+            Symbol: "{{ $values.B.Labels.symbol }}"
+          isPaused: false
+          notification_settings:
+            receiver: Discord Server
