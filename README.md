@@ -50,6 +50,8 @@ docker exec -it kafka-producer python /app/producer.py
 
 6) To see the Dashboard, go to [http://localhost:3000/dashboards](http://localhost:3000/dashboards)
 
+7) The Discord for Notification Link is found in the report for security reason.
+
 
 
 
