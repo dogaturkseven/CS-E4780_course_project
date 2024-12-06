@@ -34,10 +34,10 @@ password: admin
 
 5) At Grafana home page, Connection -> Add new Connection 
 
-Choose InfluxDB -> Add new datasource 
-Fill in HTTP field URL: http://influxdb:8086
-Fill in InfluxDB Details field Database: trading_db
-Save & Test
+- Choose InfluxDB -> Add new datasource 
+- Fill in HTTP field URL: http://influxdb:8086
+- Fill in InfluxDB Details field Database: trading_db
+- Click Save & Test
 
 
 5) Run  the following commands:
